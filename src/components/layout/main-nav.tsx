@@ -1,36 +1,30 @@
 "use client";
 
-import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { BarChart2, Banknote, Map, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
-  { href: "/routes", label: "Routes", icon: Map },
-  { href: "/compare", label: "Compare", icon: BarChart2 },
-  { href: "/banking", label: "Banking", icon: Banknote },
-  { href: "/pooling", label: "Pooling", icon: Users },
+  { href: "/routes", label: "🚢 Routes" },
+  { href: "/compare", label: "📊 Compare" },
+  { href: "/banking", label: "🏦 Banking" },
+  { href: "/pooling", label: "💧 Pooling" },
 ];
 
 export function MainNav() {
   const pathname = usePathname();
 
   return (
-    <>
+    <nav className="flex items-center gap-10 text-lg font-medium">
       {navItems.map((item) => (
-        <SidebarMenuItem key={item.href}>
-          <SidebarMenuButton
-            asChild
-            isActive={pathname.startsWith(item.href)}
-            tooltip={{ children: item.label }}
-          >
-            <Link href={item.href}>
-              <item.icon />
-              <span>{item.label}</span>
-            </Link>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
+        <Link
+          key={item.href}
+          href={item.href}
+          className={`px-4 py-2 rounded-md border border-transparent transition-all hover:bg-accent/10 hover:border-primary hover:text-primary ${pathname.startsWith(item.href) ? "text-foreground" : "text-foreground/60"
+            }`}
+        >
+          {item.label}
+        </Link>
       ))}
-    </>
+    </nav>
   );
 }

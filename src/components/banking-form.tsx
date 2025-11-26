@@ -18,9 +18,10 @@ interface BankingFormProps {
   ship: Ship;
   actionType: 'bank' | 'apply';
   maxAmount: number;
+  year: number;
 }
 
-export default function BankingForm({ ship, actionType, maxAmount }: BankingFormProps) {
+export default function BankingForm({ ship, actionType, maxAmount, year }: BankingFormProps) {
   const { toast } = useToast();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema.refine(data => data.amount <= maxAmount, {
@@ -34,8 +35,8 @@ export default function BankingForm({ ship, actionType, maxAmount }: BankingForm
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     const action = actionType === 'bank'
-      ? () => bankSurplus(ship.id, data.amount)
-      : () => applySurplus(ship.id, data.amount, maxAmount);
+      ? () => bankSurplus(ship.id, data.amount, year)
+      : () => applySurplus(ship.id, data.amount, maxAmount, year);
 
     const result = await action();
 

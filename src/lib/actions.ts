@@ -15,9 +15,8 @@ export async function setBaseline(routeId: string) {
   }
 }
 
-export async function bankSurplus(shipId: string, amount: number) {
+export async function bankSurplus(shipId: string, amount: number, year: number) {
   try {
-    const year = 2025;
     await apiClient.post('/banking/bank', { shipId, year, amount });
     revalidatePath('/banking');
     return { success: true, message: `Successfully banked ${amount.toFixed(2)} units.` };
@@ -26,9 +25,8 @@ export async function bankSurplus(shipId: string, amount: number) {
   }
 }
 
-export async function applySurplus(shipId: string, amount: number, bankedAmount: number) {
+export async function applySurplus(shipId: string, amount: number, bankedAmount: number, year: number) {
   try {
-    const year = 2025;
     await apiClient.post('/banking/apply', { shipId, year, amount });
     revalidatePath('/banking');
     return { success: true, message: `Successfully applied surplus.` };

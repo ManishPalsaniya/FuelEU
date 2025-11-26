@@ -74,9 +74,8 @@ export async function addBankingRecord(record: Omit<BankingRecord, 'id' | 'date'
   // No-op
 }
 
-export async function getBankingRecords(shipId: string): Promise<{ records: BankingRecord[], totalBanked: number }> {
+export async function getBankingRecords(shipId: string, year: number = 2024): Promise<{ records: BankingRecord[], totalBanked: number }> {
   try {
-    const year = 2024; // Default year
     const response = await apiClient.get<{ records: BankingRecord[], totalBanked: number }>('/banking/records', { params: { shipId, year } });
     return response.data;
   } catch (error) {

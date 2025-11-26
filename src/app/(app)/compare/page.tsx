@@ -44,19 +44,54 @@ export default async function ComparePage() {
       };
     });
 
+  const compliantRoutesCount = comparisonData.filter(d => d.isCompliant).length;
+  const totalRoutesCount = comparisonData.length;
+  const averageIntensity = comparisonData.reduce((acc, curr) => acc + curr.ghgIntensity, 0) / (totalRoutesCount || 1);
+
   return (
     <div className="space-y-6">
-      <div> 
+      <div>
         <h2 className="text-2xl font-bold tracking-tight">Routes Comparison</h2>
-        <p className="text-muted-foreground">
-          Compare routes' GHG intensity against the baseline. Current Target:  {GHG_TARGET} gCO₂e/MJ
-        </p>
       </div>
+
+      {/* Intensity Comparison Summary */}
+      <div className="grid gap-4 md:grid-cols-3">
+        <Card className="bg-[#393E46] border-gray-600">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">Target GHG Intensity</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">{GHG_TARGET} <span className="text-sm font-normal text-[#4ade80]"> gCO₂e/MJ</span></div>
+            <p className="text-xs text-gray-400">2% reduction from {baselineRoute.ghgIntensity.toFixed(2)} baseline (fixed target)</p>
+          </CardContent>
+        </Card>
+        <Card className="bg-[#393E46] border-gray-600">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">Compliant Routes</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">{compliantRoutesCount} <span className="text-sm font-normal text-gray-400">/ {totalRoutesCount}</span></div>
+            <p className="text-xs text-gray-400">Routes meeting the target</p>
+          </CardContent>
+        </Card>
+        <Card className="bg-[#393E46] border-gray-600">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">Average Intensity</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className={`text-2xl font-bold ${averageIntensity <= GHG_TARGET ? 'text-[#4ade80]' : 'text-[#f87171]'}`}>
+              {averageIntensity.toFixed(4)}
+            </div>
+            <p className="text-xs text-gray-400">Average GHG intensity across all routes</p>
+          </CardContent>
+        </Card>
+      </div>
+
       <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
-        <Card className="lg:col-span-2">
+        <Card className="lg:col-span-2 bg-[#393E46] border-gray-600">
           <CardHeader>
-            <CardTitle>GHG Intensity Comparison</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-white">GHG Intensity Comparison</CardTitle>
+            <CardDescription className="text-gray-400">
               Visualizing GHG intensity of each route against the baseline and target.
             </CardDescription>
           </CardHeader>
@@ -64,10 +99,10 @@ export default async function ComparePage() {
             <CompareChart data={comparisonData} baseline={baselineRoute.ghgIntensity} target={GHG_TARGET} />
           </CardContent>
         </Card>
-        <Card className="lg:col-span-2">
+        <Card className="lg:col-span-2 bg-[#393E46] border-gray-600">
           <CardHeader>
-            <CardTitle>Comparison Details</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-white">Comparison Details</CardTitle>
+            <CardDescription className="text-gray-400">
               Detailed breakdown of each route's performance against the baseline.
             </CardDescription>
           </CardHeader>

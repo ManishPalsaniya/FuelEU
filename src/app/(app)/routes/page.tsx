@@ -25,15 +25,14 @@ export default async function RoutesPage({ searchParams }: {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Routes Management</h2>
-          <p className="text-muted-foreground">View, filter, and manage vessel routes.</p>
         </div>
         <RoutesFilters vesselTypes={vesselTypes} fuelTypes={fuelTypes} years={years} />
       </div>
 
-      <Card>
+      <Card className="bg-[#393E46] border-gray-600">
         <CardHeader>
-          <CardTitle>Route Data</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-white">Route Data</CardTitle>
+          <CardDescription className="text-gray-400">
             Detailed information on all recorded voyages. Set a baseline route for compliance comparison.
           </CardDescription>
         </CardHeader>

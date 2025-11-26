@@ -18,7 +18,7 @@ interface BankingDashboardProps {
 
 export default function BankingDashboard({ ships, initialBankingRecords }: BankingDashboardProps) {
     const [selectedShipId, setSelectedShipId] = useState<string>(ships[0]?.id || "");
-    const [selectedYear, setSelectedYear] = useState<string>("2025");
+    const [selectedYear, setSelectedYear] = useState<string>("2024");
 
     const selectedShip = ships.find(s => s.id === selectedShipId);
     const bankingData = selectedShip ? initialBankingRecords[selectedShip.id] : { records: [], totalBanked: 0 };
@@ -53,7 +53,7 @@ export default function BankingDashboard({ ships, initialBankingRecords }: Banki
     return (
         <div className="min-h-screen p-6 text-white">
             <div className="flex flex-col gap-6 max-w-7xl mx-auto">
-            
+
 
                 {/* Filters */}
                 <Card className="bg-[#393E46] border-gray-600">
@@ -146,6 +146,7 @@ export default function BankingDashboard({ ships, initialBankingRecords }: Banki
                                     ship={selectedShip}
                                     actionType="bank"
                                     maxAmount={selectedShip.complianceBalance}
+                                    year={parseInt(selectedYear)}
                                 />
                             ) : (
                                 <div className="rounded-md bg-[#222831] p-3 text-sm text-gray-400">
@@ -174,6 +175,7 @@ export default function BankingDashboard({ ships, initialBankingRecords }: Banki
                                     ship={selectedShip}
                                     actionType="apply"
                                     maxAmount={totalBanked}
+                                    year={parseInt(selectedYear)}
                                 />
                             ) : (
                                 <div className="rounded-md bg-[#222831] p-3 text-sm text-gray-400">

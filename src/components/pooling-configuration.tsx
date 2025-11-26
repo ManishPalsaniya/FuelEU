@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowUpDown, Filter, CheckCircle2, XCircle, AlertTriangle, ArrowRight, Loader2, Download } from "lucide-react";
+import { ArrowUpDown, Filter, CheckCircle2, XCircle, AlertTriangle, ArrowRight, Loader2 } from "lucide-react";
 import { createPool } from "@/lib/actions";
 import { useToast } from "@/hooks/use-toast";
 
@@ -165,24 +165,7 @@ export default function PoolingConfiguration({ initialShips }: PoolingConfigurat
         });
     };
 
-    const handleExport = () => {
-        const data = {
-            reportType: "pooling",
-            generatedAt: new Date().toISOString(),
-            dashboard: "Fuel EU Compliance",
-            note: "This is a sample export. In production, this would contain actual data from the current tab."
-        };
 
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'pooling-report.json';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    };
 
     // --- Filtering & Sorting ---
     const filteredMembers = useMemo(() => {
@@ -218,17 +201,13 @@ export default function PoolingConfiguration({ initialShips }: PoolingConfigurat
     return (
         <div className="space-y-6">
             {/* Summary Card */}
-            <Card>
+            <Card className="bg-[#393E46] border-gray-600">
                 <CardHeader>
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                         <div>
-                            <CardTitle>Pool Summary</CardTitle>
-                            <CardDescription>Real-time validation of your selected compliance pool.</CardDescription>
+                            <CardTitle className="text-white">Pool Summary</CardTitle>
                         </div>
-                        <Button variant="outline" onClick={handleExport}>
-                            <Download className="mr-2 h-4 w-4" />
-                            Export Report
-                        </Button>
+
                     </div>
                 </CardHeader>
                 <CardContent>
@@ -261,7 +240,7 @@ export default function PoolingConfiguration({ initialShips }: PoolingConfigurat
                     </div>
 
                     {simulationResult.summary.validationErrors.length > 0 && (
-                        <div className="mt-4 rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+                        <div className="mt-4 rounded-md bg-red-900/30 p-3 text-sm text-red-500">
                             <div className="flex items-center gap-2 font-medium">
                                 <AlertTriangle className="h-4 w-4" />
                                 Validation Errors:
@@ -277,23 +256,23 @@ export default function PoolingConfiguration({ initialShips }: PoolingConfigurat
             </Card>
 
             {/* Configuration Table */}
-            <Card>
+            <Card className="bg-[#393E46] border-gray-600">
                 <CardHeader>
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                         <div>
-                            <CardTitle>Available Ships</CardTitle>
-                            <CardDescription>Select ships to include in the pool.</CardDescription>
+                            <CardTitle className="text-white">Available Ships</CardTitle>
+                            <CardDescription className="text-gray-400">Select ships to include in the pool.</CardDescription>
                         </div>
                         <div className="flex items-center gap-2">
                             <Select value={filter} onValueChange={(v: any) => setFilter(v)}>
-                                <SelectTrigger className="w-[150px]">
+                                <SelectTrigger className="w-[150px] bg-[#222831] border-gray-600 text-white">
                                     <Filter className="mr-2 h-4 w-4" />
                                     <SelectValue placeholder="Filter" />
                                 </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="all">All Ships</SelectItem>
-                                    <SelectItem value="surplus">Surplus Only</SelectItem>
-                                    <SelectItem value="deficit">Deficit Only</SelectItem>
+                                <SelectContent className="bg-[#222831] border-gray-600 text-white">
+                                    <SelectItem value="all" className="focus:bg-[#393E46] focus:text-white">All Ships</SelectItem>
+                                    <SelectItem value="surplus" className="focus:bg-[#393E46] focus:text-white">Surplus Only</SelectItem>
+                                    <SelectItem value="deficit" className="focus:bg-[#393E46] focus:text-white">Deficit Only</SelectItem>
                                 </SelectContent>
                             </Select>
                             <Button
@@ -309,45 +288,47 @@ export default function PoolingConfiguration({ initialShips }: PoolingConfigurat
                 <CardContent>
                     <Table>
                         <TableHeader>
-                            <TableRow>
-                                <TableHead className="w-[50px]">
+                            <TableRow className="border-gray-600 hover:bg-[#393E46]">
+                                <TableHead className="w-[50px] text-gray-300">
                                     <Checkbox
                                         checked={selectedShips.size === initialShips.length && initialShips.length > 0}
                                         onCheckedChange={toggleAll}
+                                        className="border-gray-500 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                                     />
                                 </TableHead>
-                                <TableHead className="cursor-pointer" onClick={() => requestSort('id')}>
+                                <TableHead className="cursor-pointer text-gray-300" onClick={() => requestSort('id')}>
                                     <div className="flex items-center gap-1">
                                         Ship ID <ArrowUpDown className="h-3 w-3" />
                                     </div>
                                 </TableHead>
-                                <TableHead className="cursor-pointer" onClick={() => requestSort('name')}>
+                                <TableHead className="cursor-pointer text-gray-300" onClick={() => requestSort('name')}>
                                     <div className="flex items-center gap-1">
                                         Name <ArrowUpDown className="h-3 w-3" />
                                     </div>
                                 </TableHead>
-                                <TableHead>Type</TableHead>
-                                <TableHead className="text-right cursor-pointer" onClick={() => requestSort('complianceBalance')}>
+                                <TableHead className="text-gray-300">Type</TableHead>
+                                <TableHead className="text-right cursor-pointer text-gray-300" onClick={() => requestSort('complianceBalance')}>
                                     <div className="flex items-center justify-end gap-1">
                                         CB Before <ArrowUpDown className="h-3 w-3" />
                                     </div>
                                 </TableHead>
-                                <TableHead className="text-right">CB After Pool</TableHead>
-                                <TableHead className="text-right">Impact</TableHead>
+                                <TableHead className="text-right text-gray-300">CB After Pool</TableHead>
+                                <TableHead className="text-right text-gray-300">Impact</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {filteredMembers.map((member) => (
-                                <TableRow key={member.shipId} className={member.status === 'surplus' ? 'bg-green-500/5 hover:bg-green-500/10' : member.status === 'deficit' ? 'bg-red-500/5 hover:bg-red-500/10' : ''}>
+                                <TableRow key={member.shipId} className={`border-gray-600 hover:bg-[#222831] ${member.status === 'surplus' ? 'bg-green-500/5' : member.status === 'deficit' ? 'bg-red-500/5' : ''}`}>
                                     <TableCell>
                                         <Checkbox
                                             checked={member.selected}
                                             onCheckedChange={() => toggleShip(member.shipId)}
+                                            className="border-gray-500 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                                         />
                                     </TableCell>
-                                    <TableCell className="font-medium">{member.shipId}</TableCell>
-                                    <TableCell>{member.shipName}</TableCell>
-                                    <TableCell>{member.vesselType}</TableCell>
+                                    <TableCell className="font-medium text-gray-300">{member.shipId}</TableCell>
+                                    <TableCell className="text-gray-300">{member.shipName}</TableCell>
+                                    <TableCell className="text-gray-300">{member.vesselType}</TableCell>
                                     <TableCell className={`text-right font-mono ${member.cbBefore > 0 ? 'text-green-600' : 'text-red-600'}`}>
                                         {member.cbBefore.toFixed(2)}
                                     </TableCell>

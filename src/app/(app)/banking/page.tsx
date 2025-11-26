@@ -11,7 +11,7 @@ export default async function BankingPage() {
   }
 
   // Fetch banking records for all ships
-  const bankingRecordsPromises = ships.map(ship => getBankingRecords(ship.id));
+  const bankingRecordsPromises = ships.map(ship => getBankingRecords(ship.id, ship.year));
   const bankingRecordsResults = await Promise.all(bankingRecordsPromises);
 
   const initialBankingRecords: Record<string, any> = {};
