@@ -4,6 +4,10 @@ A modern, full-stack maritime emissions tracking and compliance management syste
 
 ![License](https://img.shields.io/badge/License-MIT-blue.svg) ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue) ![React](https://img.shields.io/badge/React-18-blue) ![Node](https://img.shields.io/badge/Node-20-green) ![Prisma](https://img.shields.io/badge/Prisma-5.0-blue)
 
+## 🚀 Live Demo
+- **Frontend:** [https://fuel-eu.vercel.app/](https://fuel-eu.vercel.app/) (Example)
+- **Backend API:** [https://fuel-eu-backend.onrender.com](https://fuel-eu-backend.onrender.com) (Example)
+
 ## 📋 Table of Contents
 
 - [Features](#-features)
@@ -38,23 +42,27 @@ A modern, full-stack maritime emissions tracking and compliance management syste
 
 ### Frontend
 - **Framework:** React (Next.js) with TypeScript
+- **Build Tool:** Vite / Next.js Compiler
 - **Styling:** Tailwind CSS with custom dark theme
 - **Components:** `shadcn/ui`
-- **Charts:** `recharts`
 - **State Management:** React Server Components & Actions
+- **HTTP Client:** Fetch API / Axios
+- **Deployment:** Vercel
 
 ### Backend
 - **Runtime:** Node.js 20+
-- **Framework:** Express
-- **Language:** TypeScript
-- **ORM:** Prisma
-- **Database:** PostgreSQL / SQLite (via Prisma)
+- **Framework:** Express 5.1
+- **Language:** TypeScript 5.9
+- **ORM:** Prisma 5.0
+- **Database:** PostgreSQL (Production) / SQLite (Dev)
 - **Architecture:** Hexagonal (Ports & Adapters)
+- **Deployment:** Render
 
 ### Development Tools
 - **Package Manager:** npm
 - **Linting:** ESLint
 - **Version Control:** Git & GitHub
+- **API Testing:** Postman
 
 ## 🏗️ Architecture
 
@@ -106,8 +114,8 @@ backend/
 
 1.  **Clone the repository**
     ```bash
-    git clone https://github.com/yourusername/fuel-eu.git
-    cd fuel-eu
+    git clone https://github.com/ManishPalsaniya/FuelEU.git
+    cd FuelEU
     ```
 
 2.  **Install Backend Dependencies**
@@ -149,20 +157,39 @@ DATABASE_URL="postgresql://user:password@localhost:5432/fueleu_db"
     ```
     Frontend will run on `http://localhost:3000`
 
+## 🌐 Deployment
+
+### Backend Deployment (Render)
+1.  **Push to GitHub**
+2.  **Create Render Web Service**
+    -   Build Command: `npm install && npm run build`
+    -   Start Command: `npm start`
+3.  **Environment Variables:** Set `DATABASE_URL`
+
+### Frontend Deployment (Vercel)
+1.  **Import GitHub Repository**
+2.  **Configure Build:**
+    -   Framework: Next.js / Vite
+    -   Build Command: `npm run build`
+3.  **Deploy**
+
 ## 📚 API Documentation
 
 ### Base URL
+- **Production:** `https://fuel-eu-backend.onrender.com/api`
 - **Local:** `http://localhost:3001/api`
 
 ### Endpoints
 
 #### Routes
 - `GET /routes` - Get all routes
+- `GET /routes/:id` - Get route by ID
 - `POST /routes/:id/baseline` - Set route as baseline
 
 #### Compliance
 - `GET /compliance/cb?year=YYYY` - Get compliance for year
 - `GET /compliance/adjusted-cb?year=YYYY` - Get adjusted CB for year
+- `POST /compliance/cb/:shipId/:year` - Calculate compliance
 
 #### Banking
 - `POST /banking/bank` - Bank surplus emissions
@@ -171,6 +198,24 @@ DATABASE_URL="postgresql://user:password@localhost:5432/fueleu_db"
 
 #### Pooling
 - `POST /pools` - Create compliance pool
+- `GET /pools/:poolId/members` - Get pool members
+
+## 🧪 Testing
+
+### Run Tests
+```bash
+# Frontend
+npm run test
+
+# Backend
+cd backend
+npm run test
+```
+
+### API Testing with Postman
+- **Health Check:** `GET /health`
+- **Get Routes:** `GET /routes`
+- **Bank Surplus:** `POST /banking/bank`
 
 ## 📁 Project Structure
 
@@ -197,7 +242,7 @@ fuel-eu/
 
 ## 🔑 Key Technical Decisions
 
-### Why Prisma instead of Mongoose?
+### Why Prisma?
 - **Type Safety:** Prisma generates a fully type-safe client based on the schema.
 - **Relational Data:** Maritime data (Ships, Routes, Logs) fits well into a relational model.
 - **Migrations:** Robust migration system for evolving schemas.
