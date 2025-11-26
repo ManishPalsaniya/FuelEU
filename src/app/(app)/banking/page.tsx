@@ -22,7 +22,7 @@ export default async function BankingPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight">Compliance Banking</h2>
+        <h2 className="text-2xl font-bold tracking-tight">Banking and Compliances</h2>
         <p className="text-muted-foreground">Manage compliance balance surplus and deficits for your fleet.</p>
       </div>
       <BankingDashboard ships={ships} initialBankingRecords={initialBankingRecords} />

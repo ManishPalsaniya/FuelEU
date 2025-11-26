@@ -46,10 +46,10 @@ export default async function ComparePage() {
 
   return (
     <div className="space-y-6">
-      <div>
+      <div> 
         <h2 className="text-2xl font-bold tracking-tight">Routes Comparison</h2>
         <p className="text-muted-foreground">
-          Compare routes' GHG intensity against the baseline. Current Target: {GHG_TARGET} gCO₂e/MJ
+          Compare routes' GHG intensity against the baseline. Current Target:  {GHG_TARGET} gCO₂e/MJ
         </p>
       </div>
       <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
