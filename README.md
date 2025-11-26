@@ -1,86 +1,236 @@
-# Fuel EU Compliance Maritime Dashboard
+# ⚡ Fuel EU Compliance Dashboard
 
-## Overview
-The **Fuel EU Compliance Maritime Dashboard** is a comprehensive tool designed to help maritime companies manage and analyze their fleet's compliance with FuelEU Maritime regulations. It provides features for:
-- **Route Analysis:** Tracking GHG intensity and fuel consumption per route.
-- **Compliance Comparison:** Visualizing route performance against baseline and targets.
-- **Banking & Borrowing:** Managing compliance surpluses and deficits via banking mechanisms.
-- **Pooling:** Simulating and creating compliance pools to optimize fleet performance.
+A modern, full-stack maritime emissions tracking and compliance management system built with **React**, **Node.js**, **TypeScript**, and **Prisma**. This application helps shipping companies monitor and manage their compliance with EU FuelEU Maritime regulations.
 
-## Architecture Summary
-The application follows a modern, decoupled architecture:
+![License](https://img.shields.io/badge/License-MIT-blue.svg) ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue) ![React](https://img.shields.io/badge/React-18-blue) ![Node](https://img.shields.io/badge/Node-20-green) ![Prisma](https://img.shields.io/badge/Prisma-5.0-blue)
+
+## 📋 Table of Contents
+
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Architecture](#-architecture)
+- [Getting Started](#-getting-started)
+- [Deployment](#-deployment)
+- [API Documentation](#-api-documentation)
+- [Testing](#-testing)
+- [Project Structure](#-project-structure)
+- [Contributing](#-contributing)
+
+## ✨ Features
+
+### Core Functionality
+- **🚢 Route Management:** Track and analyze maritime routes with GHG intensity calculations
+- **📊 Compliance Monitoring:** Real-time compliance balance (CB) calculations per ship and year
+- **🏦 Banking System:** Bank surplus emissions and apply them to deficit periods
+- **💧 Pooling:** Create compliance pools to redistribute emissions across multiple vessels
+- **📈 Comparison Dashboard:** Compare routes against baseline and target intensities
+
+### Technical Features
+- **✅ Real-time Data:** Live updates via API
+- **📱 Mobile Responsive:** Optimized for desktop, tablet, and mobile devices
+- **🎨 Modern UI:** Glassmorphism design with "Dark Slate" theme
+- **🔒 Type-Safe:** Full TypeScript implementation
+- **🏗️ Hexagonal Architecture:** Clean separation of concerns
+- **🌐 RESTful API:** Well-documented endpoints
+- **🔄 CORS Enabled:** Cross-origin resource sharing configured
+
+## 🛠️ Tech Stack
 
 ### Frontend
-- **Framework:** Next.js (React) with TypeScript.
-- **UI Library:** `shadcn/ui` components styled with Tailwind CSS.
-- **Data Visualization:** `recharts` for interactive charts.
-- **State Management:** React Server Components and Server Actions for data fetching and mutations.
+- **Framework:** React (Next.js) with TypeScript
+- **Styling:** Tailwind CSS with custom dark theme
+- **Components:** `shadcn/ui`
+- **Charts:** `recharts`
+- **State Management:** React Server Components & Actions
 
 ### Backend
-The backend implements a **Hexagonal Architecture (Ports and Adapters)** to separate business logic from external concerns:
-- **Core (Domain & Application):** Contains business rules (e.g., `BankingUseCase`, `ComplianceUseCase`) and entities.
-- **Ports:** Interfaces defining how the core interacts with the outside world (e.g., `BankingRepository`, `ComplianceRepository`).
-- **Adapters:**
-    - **Inbound:** HTTP Controllers (Express.js) handling API requests.
-    - **Outbound:** Repository implementations (PostgreSQL/Prisma) for data persistence.
+- **Runtime:** Node.js 20+
+- **Framework:** Express
+- **Language:** TypeScript
+- **ORM:** Prisma
+- **Database:** PostgreSQL / SQLite (via Prisma)
+- **Architecture:** Hexagonal (Ports & Adapters)
 
-## Setup & Run Instructions
+### Development Tools
+- **Package Manager:** npm
+- **Linting:** ESLint
+- **Version Control:** Git & GitHub
+
+## 🏗️ Architecture
+
+This project follows **Hexagonal Architecture** (also known as Ports and Adapters pattern) for the backend, ensuring clean separation of concerns and testability.
+
+### Backend Architecture
+```
+backend/
+├── src/
+│   ├── core/                    # Business Logic (Domain Layer)
+│   │   ├── domain/
+│   │   │   ├── Entities.ts      # Domain entities
+│   │   │   └── Formulas.ts      # Compliance calculations
+│   │   ├── application/
+│   │   │   ├── BankingUseCase.ts
+│   │   │   └── ComplianceUseCase.ts
+│   │   └── ports/
+│   │       └── Repositories.ts  # Repository interfaces
+│   │
+│   ├── adapters/                # Adapters Layer
+│   │   ├── inbound/             # Inbound Adapters (Controllers)
+│   │   │   └── http/
+│   │   │       ├── BankingController.ts
+│   │   │       └── ComplianceController.ts
+│   │   │
+│   │   └── outbound/            # Outbound Adapters (Repositories)
+│   │       └── postgres/
+│   │           ├── BankingRepository.impl.ts
+│   │           └── ComplianceRepository.impl.ts
+│   │
+│   └── infrastructure/          # Framework & Config
+│       └── server.ts
+```
+
+### Key Architectural Principles:
+- **✅ Domain-Driven Design:** Business logic isolated in the core
+- **✅ Dependency Inversion:** Core depends on abstractions, not implementations
+- **✅ Testability:** Easy to mock and test each layer independently
+- **✅ Flexibility:** Easy to swap Database implementations via Prisma
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v18+ recommended)
-- npm or yarn
+- **Node.js:** 20.x or higher
+- **npm:** 10.x or higher
+- **Database:** PostgreSQL (or SQLite for dev)
 
 ### Installation
-1.  **Clone the repository.**
-2.  **Install dependencies** for both frontend and backend:
-    ```bash
-    # Root (Frontend)
-    npm install
 
-    # Backend
-    cd backend
-    npm install
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/yourusername/fuel-eu.git
+    cd fuel-eu
     ```
 
-### Running the Application
-You need to run both the frontend and backend servers concurrently.
-
-1.  **Start the Backend:**
+2.  **Install Backend Dependencies**
     ```bash
     cd backend
-    npm run dev
+    npm install
+    # Generate Prisma Client
+    npx prisma generate
     ```
-    The backend API will typically run on port `3001` (or as configured).
 
-2.  **Start the Frontend:**
+3.  **Install Frontend Dependencies**
     ```bash
-    # In a new terminal, from the root directory
-    npm run dev
+    cd ../src  # or root depending on structure
+    npm install
     ```
-    The frontend will be available at `http://localhost:3000`.
 
-## Key Features & Usage
+### Configuration
 
-### 🚢 Routes
-Manage individual route data. Set a route as a **Baseline** to enable comparisons.
-
-### 📊 Compare
-Compare other routes against your set baseline.
-- **Visuals:** Bar charts showing GHG intensity vs. Target.
-- **Metrics:** Compliance status, % difference from baseline.
-
-### 🏦 Banking
-Manage your compliance balance.
-- **Bank Surplus:** If a ship has a positive balance, bank it for future use.
-- **Apply Surplus:** Use banked amounts to cover deficits.
-- **History:** View a log of all banking transactions.
-
-### 💧 Pooling
-Create compliance pools to offset deficits with surpluses from other ships.
-- **Simulator:** Real-time validation of pool validity (e.g., min 2 members, positive net balance).
-
-## Testing
-To execute tests (if configured):
-```bash
-npm test
+#### Backend Environment Variables
+Create a `.env` file in the `backend/` directory:
+```env
+PORT=3001
+DATABASE_URL="postgresql://user:password@localhost:5432/fueleu_db"
 ```
+
+### Running Locally
+
+1.  **Start Backend**
+    ```bash
+    cd backend
+    npm run dev
+    ```
+    Backend will run on `http://localhost:3001`
+
+2.  **Start Frontend**
+    ```bash
+    # From root
+    npm run dev
+    ```
+    Frontend will run on `http://localhost:3000`
+
+## 📚 API Documentation
+
+### Base URL
+- **Local:** `http://localhost:3001/api`
+
+### Endpoints
+
+#### Routes
+- `GET /routes` - Get all routes
+- `POST /routes/:id/baseline` - Set route as baseline
+
+#### Compliance
+- `GET /compliance/cb?year=YYYY` - Get compliance for year
+- `GET /compliance/adjusted-cb?year=YYYY` - Get adjusted CB for year
+
+#### Banking
+- `POST /banking/bank` - Bank surplus emissions
+- `POST /banking/apply` - Apply banked surplus
+- `GET /banking/records` - Get banking history
+
+#### Pooling
+- `POST /pools` - Create compliance pool
+
+## 📁 Project Structure
+
+```
+fuel-eu/
+├── backend/                 # Backend API (Node.js + Express + Prisma)
+│   ├── src/
+│   │   ├── core/           # Business logic
+│   │   ├── adapters/       # Controllers & Repositories
+│   │   └── infrastructure/ # Server & DB config
+│   ├── prisma/             # Database schema
+│   └── package.json
+│
+├── src/                     # Frontend App (Next.js)
+│   ├── app/                # App Router pages
+│   ├── components/         # UI Components
+│   ├── lib/                # Utilities & Server Actions
+│   └── package.json
+│
+├── AGENT_WORKFLOW.md        # Development workflow documentation
+├── README.md                # This file
+└── REFLECTION.md            # Technical decisions and learnings
+```
+
+## 🔑 Key Technical Decisions
+
+### Why Prisma instead of Mongoose?
+- **Type Safety:** Prisma generates a fully type-safe client based on the schema.
+- **Relational Data:** Maritime data (Ships, Routes, Logs) fits well into a relational model.
+- **Migrations:** Robust migration system for evolving schemas.
+
+### Why Hexagonal Architecture?
+- **Testability:** Easy to mock repositories and test business logic
+- **Flexibility:** Can swap database providers without changing core logic
+- **Maintainability:** Clear separation between business rules and infrastructure
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+1.  Fork the repository
+2.  Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 👥 Authors
+
+**Manish Palsaniya**
+- Email: [palsaniyamanish325@gmail.com](mailto:palsaniyamanish325@gmail.com)
+
+## 🙏 Acknowledgments
+
+- EU FuelEU Maritime Regulation guidelines
+- Prisma for database ORM
+- Vercel for frontend hosting
+- React and Next.js communities
+
+---
+Built with ⚡ by **Manish Palsaniya**
