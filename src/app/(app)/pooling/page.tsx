@@ -1,5 +1,7 @@
-import PoolingSimulator from "@/components/pooling-simulator";
+import PoolingConfiguration from "@/components/pooling-configuration";
 import { getShips } from "@/lib/data";
+
+export const dynamic = 'force-dynamic';
 
 export default async function PoolingPage() {
   const ships = await getShips();
@@ -10,7 +12,7 @@ export default async function PoolingPage() {
         <h2 className="text-2xl font-bold tracking-tight">Pooling Simulator</h2>
         <p className="text-muted-foreground">Simulate fuel pooling based on FuelEU Maritime Regulation Article 21.</p>
       </div>
-      <PoolingSimulator initialShips={ships} />
+      <PoolingConfiguration initialShips={ships} />
     </div>
   );
 }

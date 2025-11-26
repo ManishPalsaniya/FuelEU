@@ -1,5 +1,5 @@
 import { getBaselineRoute, getRoutes } from '@/lib/data';
-import type { Route } from '@/lib/lib/types';
+import type { Route } from '@/lib/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import CompareChart from '@/components/compare-chart';
 import CompareTable from '@/components/compare-table';
@@ -7,6 +7,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
 
 export const GHG_TARGET = 89.3368;
+
+export const dynamic = 'force-dynamic';
 
 export interface ComparisonData extends Route {
   baselineGhgIntensity: number;

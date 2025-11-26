@@ -3,6 +3,8 @@ import RoutesTable from '@/components/routes-table';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import RoutesFilters from '@/components/routes-filters';
 
+export const dynamic = 'force-dynamic';
+
 export default async function RoutesPage({ searchParams }: {
   searchParams?: {
     vesselType?: string;

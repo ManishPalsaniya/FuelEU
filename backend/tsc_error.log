@@ -1,0 +1,10 @@
+src/adapters/outbound/postgres/BankingRepository.impl.ts(3,10): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+src/adapters/outbound/postgres/BankingRepository.impl.ts(33,32): error TS7006: Parameter 'sum' implicitly has an 'any' type.
+src/adapters/outbound/postgres/BankingRepository.impl.ts(33,37): error TS7006: Parameter 'rec' implicitly has an 'any' type.
+src/adapters/outbound/postgres/ComplianceRepository.impl.ts(3,10): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+src/adapters/outbound/postgres/PoolRepository.impl.ts(3,10): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+src/adapters/outbound/postgres/RouteRepository.impl.ts(3,10): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+src/core/application/PoolUseCase.ts(3,30): error TS2307: Cannot find module 'uuid' or its corresponding type declarations.
+src/infrastructure/db/seeds/seed.ts(1,10): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+src/infrastructure/server.ts(4,20): error TS2307: Cannot find module 'dotenv' or its corresponding type declarations.
+src/infrastructure/server.ts(5,10): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.

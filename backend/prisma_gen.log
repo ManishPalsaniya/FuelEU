@@ -1,0 +1,3 @@
+Failed to load config file "D:\projects\FuelEU\backend\prisma.config.ts" as a TypeScript/JavaScript module. Error: Error: Cannot find module 'dotenv/config'
+Require stack:
+- D:\projects\FuelEU\backend\prisma.config.ts

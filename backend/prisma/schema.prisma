@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Route {
+  id              String   @id @default(uuid()) @db.Uuid
+  route_id        String   @unique
+  vessel_type     String
+  fuel_type       String
+  year            Int
+  ghg_intensity   Decimal
+  fuel_consumption Decimal
+  distance        Decimal
+  total_emissions Decimal
+  is_baseline     Boolean  @default(false)
+  created_at      DateTime @default(now())
+
+  @@map("routes")
+}
+
+model ShipCompliance {
+  id                String   @id @default(uuid()) @db.Uuid
+  ship_id           String
+  year              Int
+  cb_gco2eq         Decimal
+  cb_before_banking Decimal
+  adjusted_cb       Decimal
+  created_at        DateTime @default(now())
+
+  @@map("ship_compliance")
+}
+
+model BankEntry {
+  id               String   @id @default(uuid()) @db.Uuid
+  ship_id          String
+  year             Int
+  amount_gco2eq    Decimal
+  transaction_type String
+  date             DateTime @default(now())
+
+  @@map("bank_entries")
+}
+
+model Pool {
+  id         String       @id @default(uuid()) @db.Uuid
+  pool_id    String       @unique
+  year       Int
+  is_valid   Boolean
+  sum_cb     Decimal
+  created_at DateTime     @default(now())
+  members    PoolMember[]
+
+  @@map("pools")
+}
+
+model PoolMember {
+  id         String   @id @default(uuid()) @db.Uuid
+  pool_id    String
+  ship_id    String
+  cb_before  Decimal
+  cb_after   Decimal
+  created_at DateTime @default(now())
+  pool       Pool     @relation(fields: [pool_id], references: [pool_id])
+
+  @@map("pool_members")
+}

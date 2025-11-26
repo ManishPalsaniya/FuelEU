@@ -45,6 +45,8 @@ export default function RoutesTable({ routes }: { routes: Route[] }) {
             <TableHead>Vessel Type</TableHead>
             <TableHead>Fuel Type</TableHead>
             <TableHead>Year</TableHead>
+            <TableHead>Fuel Cons. (t)</TableHead>
+            <TableHead>Distance (km)</TableHead>
             <TableHead>GHG Intensity (gCO₂e/MJ)</TableHead>
             <TableHead>Total Emissions (t)</TableHead>
             <TableHead>Status</TableHead>
@@ -58,6 +60,8 @@ export default function RoutesTable({ routes }: { routes: Route[] }) {
               <TableCell>{route.vesselType}</TableCell>
               <TableCell>{route.fuelType}</TableCell>
               <TableCell>{route.year}</TableCell>
+              <TableCell>{route.fuelConsumption.toLocaleString()}</TableCell>
+              <TableCell>{route.distance.toLocaleString()}</TableCell>
               <TableCell>{route.ghgIntensity.toFixed(2)}</TableCell>
               <TableCell>{route.totalEmissions.toLocaleString()}</TableCell>
               <TableCell>

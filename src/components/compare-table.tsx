@@ -12,7 +12,7 @@ export default function CompareTable({ data }: { data: ComparisonData[] }) {
         <TableRow>
           <TableHead>Route ID</TableHead>
           <TableHead>Vessel</TableHead>
-          <Tablehead>GHG Intensity</Tablehead>
+          <TableHead>GHG Intensity</TableHead>
           <TableHead>% Diff from Baseline</TableHead>
           <TableHead>Compliance</TableHead>
         </TableRow>
